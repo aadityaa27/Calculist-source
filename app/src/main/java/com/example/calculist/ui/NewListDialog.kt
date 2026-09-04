@@ -9,11 +9,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -72,14 +77,20 @@ fun NewListDialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = darkBg
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(darkBg),
+            contentAlignment = Alignment.TopCenter
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 20.dp, vertical = 14.dp),
+                    .statusBarsPadding()
+                    .displayCutoutPadding()
+                    .navigationBarsPadding()
+                    .widthIn(max = 600.dp)
+                    .padding(horizontal = 20.dp, vertical = 10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Top Bar (Screenshot 3)
@@ -92,7 +103,7 @@ fun NewListDialog(
                     IconButton(
                         onClick = onDismiss,
                         modifier = Modifier
-                            .size(38.dp)
+                            .size(42.dp)
                             .clip(CircleShape)
                             .background(buttonBg)
                     ) {
@@ -120,7 +131,7 @@ fun NewListDialog(
                         },
                         enabled = name.isNotBlank(),
                         modifier = Modifier
-                            .size(38.dp)
+                            .size(42.dp)
                             .clip(CircleShape)
                             .background(if (name.isNotBlank()) buttonBg else Color(0xFF1C1C1E))
                     ) {
