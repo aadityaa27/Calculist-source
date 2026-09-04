@@ -16,6 +16,9 @@ interface ListDao {
     @Query("SELECT * FROM lists WHERE id = :id")
     fun listById(id: Long): Flow<CalcList?>
 
+    @Query("SELECT * FROM lists WHERE id = :id")
+    suspend fun getListById(id: Long): CalcList?
+
     @Insert
     suspend fun insert(list: CalcList): Long
 
@@ -32,15 +35,27 @@ interface ItemDao {
     @Query("SELECT * FROM items WHERE listId = :listId ORDER BY createdAt ASC")
     fun itemsFor(listId: Long): Flow<List<ListItem>>
 
+    @Query("SELECT * FROM items WHERE listId = :listId ORDER BY createdAt ASC")
+    suspend fun getItemsForList(listId: Long): List<ListItem>
+
     @Query("SELECT * FROM items WHERE id = :itemId")
     suspend fun itemById(itemId: Long): ListItem?
 
     @Insert
     suspend fun insert(item: ListItem): Long
 
+    @Insert
+    suspend fun insertAll(items: List<ListItem>): List<Long>
+
     @Update
     suspend fun update(item: ListItem)
 
     @Delete
     suspend fun delete(item: ListItem)
+
+    @Query("DELETE FROM items WHERE listId = :listId AND completed = 1")
+    suspend fun deleteCompleted(listId: Long)
+
+    @Query("UPDATE items SET completed = :completed WHERE listId = :listId")
+    suspend fun setAllCompleted(listId: Long, completed: Boolean)
 }

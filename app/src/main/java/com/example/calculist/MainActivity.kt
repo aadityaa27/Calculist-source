@@ -3,6 +3,7 @@ package com.example.calculist
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -17,6 +18,7 @@ import androidx.navigation.navArgument
 import com.example.calculist.ui.CalculatorScreen
 import com.example.calculist.ui.ItemEditScreen
 import com.example.calculist.ui.ListsScreen
+import com.example.calculist.ui.SettingsScreen
 import com.example.calculist.ui.theme.CalcuListTheme
 
 /**
@@ -42,6 +44,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
             CalcuListTheme(darkTheme = isSystemInDarkTheme()) {
                 CalcuListRoot()
@@ -58,7 +61,14 @@ fun CalcuListRoot() {
 
         composable("lists") {
             ListsScreen(
-                onOpenList = { listId -> navController.navigate("list/$listId") }
+                onOpenList = { listId -> navController.navigate("list/$listId") },
+                onOpenSettings = { navController.navigate("settings") }
+            )
+        }
+
+        composable("settings") {
+            SettingsScreen(
+                onDismiss = { navController.popBackStack() }
             )
         }
 

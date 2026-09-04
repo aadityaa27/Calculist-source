@@ -126,4 +126,32 @@ class CalculatorTest {
         assertEquals(0.3, stats.total, 0.0001)
         assertEquals(0.15, stats.average, 0.0001)
     }
+
+    @Test
+    fun `completedCount and grandTotal correctly computed`() {
+        val items = listOf(
+            item("Active Item", 50.0, 2.0, completed = false),
+            item("Done Item", 25.0, 4.0, completed = true)
+        )
+        val stats = Calculator.computeStats(items)
+        assertEquals(100.0, stats.total, 0.0001)
+        assertEquals(100.0, stats.completedTotal, 0.0001)
+        assertEquals(200.0, stats.grandTotal, 0.0001)
+        assertEquals(1, stats.itemCount)
+        assertEquals(1, stats.completedCount)
+    }
+
+    @Test
+    fun `formatListAsText formats clean shareable text`() {
+        val items = listOf(
+            item("Apples", 2.50, 4.0, completed = false),
+            item("Milk", 3.00, 1.0, completed = true)
+        )
+        val stats = Calculator.computeStats(items)
+        val text = Calculator.formatListAsText("Groceries", items, stats)
+        org.junit.Assert.assertTrue(text.contains("Groceries"))
+        org.junit.Assert.assertTrue(text.contains("[ ] Apples"))
+        org.junit.Assert.assertTrue(text.contains("[✓] Milk"))
+        org.junit.Assert.assertTrue(text.contains("Active Total: $10"))
+    }
 }

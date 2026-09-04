@@ -11,6 +11,11 @@ object Formatters {
             .trimEnd('0')
             .trimEnd('.')
 
+    fun formatAmount(value: Double, symbol: String = ""): String {
+        val formatted = money(value)
+        return if (symbol.isNotBlank()) "$symbol$formatted" else formatted
+    }
+
     /** Compact form without grouping: 10.0 -> "10", 0.5 -> "0.5", -2.5 -> "-2.5". */
     fun compact(value: Double): String {
         val rounded = Math.rint(value)

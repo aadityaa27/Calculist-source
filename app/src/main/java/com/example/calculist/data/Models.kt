@@ -9,7 +9,10 @@ import androidx.room.PrimaryKey
 data class CalcList(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val name: String,
-    val createdAt: Long = System.currentTimeMillis()
+    val colorHex: String = "#FF453A",
+    val iconName: String = "list",
+    val createdAt: Long = System.currentTimeMillis(),
+    val updatedAt: Long = System.currentTimeMillis()
 )
 
 @Entity(
@@ -30,5 +33,6 @@ data class ListItem(
     val quantity: Double = 1.0,
     val notes: String = "",
     val completed: Boolean = false,
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+    val updatedAt: Long = System.currentTimeMillis()
 )
