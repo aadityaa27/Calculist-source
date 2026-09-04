@@ -18,18 +18,20 @@ android {
     }
 
     signingConfigs {
-        create("release") {
-            storeFile = file(providers.gradleProperty("CALCULIST_STORE_FILE").get())
-            storePassword = providers.gradleProperty("CALCULIST_STORE_PASSWORD").get()
-            keyAlias = providers.gradleProperty("CALCULIST_KEY_ALIAS").get()
-            keyPassword = providers.gradleProperty("CALCULIST_KEY_PASSWORD").get()
+        create("debugConfig") {
+            storeFile = file("${rootDir}/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
         }
     }
 
     buildTypes {
+        debug {
+            signingConfig = signingConfigs.getByName("debugConfig")
+        }
         release {
             isMinifyEnabled = false
-            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

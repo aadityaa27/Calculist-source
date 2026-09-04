@@ -1,0 +1,6 @@
+{
+  "name": "CalcuList",
+  "description": "A smart list and calculator application",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
